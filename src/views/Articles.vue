@@ -10,6 +10,7 @@
           placeholder="Search..."
         />
         <div v-for="post in filterSearch" :key="post.id" class="blogs">
+          <!-- This is Info of Author -->
           <div class="info">
             <span class="img"></span>
             <div class="sub-info">
@@ -18,12 +19,15 @@
               <span class="date">10-20-2020</span>
             </div>
           </div>
-          <router-link :to="'/details/' + post.id">
+          <!-- This is Link Title -->
+          <router-link :to="'/details/' + post.id" class="title-link">
             <h1 class="title-post">{{ post.title }}</h1>
           </router-link>
+          <!-- This is Text Of Post -->
           <p class="body-post">{{ post.body | short }}</p>
+          <!-- This is Category -->
           <div class="cat" v-for="cat in post.cats" :key="cat">
-            <span>{{ cat }}</span>
+            <span class="name-cat">{{ cat }}</span>
           </div>
         </div>
       </div>
@@ -37,15 +41,15 @@ export default {
   data() {
     return {
       posts: [],
-      search: ""
+      search: "",
     };
   },
   created() {
     var blogArray = [];
     this.$http
       .get("https://my-blog-e9210-default-rtdb.firebaseio.com/blogs.json")
-      .then(res => res.json())
-      .then(data => {
+      .then((res) => res.json())
+      .then((data) => {
         for (let key in data) {
           data[key].id = key;
           blogArray.push(data[key]);
@@ -55,11 +59,11 @@ export default {
   },
   computed: {
     filterSearch() {
-      return this.posts.filter(post => {
+      return this.posts.filter((post) => {
         return post.title.match(this.search);
       });
-    }
-  }
+    },
+  },
 };
 </script>
 
@@ -69,6 +73,7 @@ export default {
     margin: 30px 0;
     text-transform: capitalize;
     font-size: 2rem;
+    color: orange;
   }
   .search {
     margin-bottom: 40px !important;
@@ -100,9 +105,26 @@ export default {
       }
     }
     .title-post {
-      font-size: 1.3rem;
+      font-size: 1.5rem;
       font-weight: bold;
       margin: -22px 0 17px 0;
+      color: orange;
+    }
+    .title-link {
+      &:hover {
+        text-decoration: none !important;
+      }
+    }
+    .body-post {
+      color: #777;
+    }
+    .cat {
+      display: inline-block;
+      margin-right: 10px;
+      text-transform: capitalize;
+      color: orange;
+      font-weight: bold;
+      font-size: 0.9rem;
     }
   }
 }

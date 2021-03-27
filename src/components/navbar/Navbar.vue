@@ -44,6 +44,10 @@ nav {
     li {
       a {
         padding-right: 20px;
+        color: #777;
+        &:hover {
+          text-decoration: none;
+        }
       }
     }
   }
